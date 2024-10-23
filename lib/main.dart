@@ -1,152 +1,193 @@
 import 'package:flutter/material.dart';
-// ignore: unused_import
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(RestoProfileApp());
 }
 
-class MainApp extends StatelessWidget {
-  final biodata = <String, String>{};
-
-  MainApp({super.key}) {
-    biodata['name'] = 'My New Character';
-    biodata['email'] = 'newoc@gmail.com';
-    biodata['phone'] = '+62345678910';
-    biodata['image'] = 'chill.webp';
-    biodata['hobby'] = 'Chilling';
-    biodata['addr'] = 'St. Freeway in side of Moonstad';
-    biodata['desc'] =
-        "'A bard that seems to have arrived on some unknown wind — sometimes sings songs as old as the hills, and other times sings poems fresh and new. Likes apples and lively places but is not a fan of cheese or anything sticky. When using his Anemo power to control the wind, it often appears as feathers, as he's fond of that which appears light and breezy.'";
-  }
-
+class RestoProfileApp extends StatelessWidget {
   @override
-      Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Aplikasi Biodata",
-      home: Scaffold(
-        appBar: AppBar(title: Text("Biodata")),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.all(10),
-                alignment: Alignment.center,
-                width: double.infinity,
-
-                decoration: BoxDecoration(color: Colors.black),
-                child: Text(
-                  biodata['name'] ?? '',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Image(image: AssetImage('assets/${biodata["image"] ?? ''}')),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  btnContact(Icons.alternate_email, Colors.green[900],
-                  "mailto:${biodata['email'] ?? ''}"),
-                  btnContact(Icons.mark_email_read, Colors.blueAccent,
-                  "https://wa.me/${biodata['phone']}"),
-                  btnContact(Icons.phone, Colors.deepPurple,
-                  "tel:${biodata['phone']}"),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              textAttribute('Hobby', biodata['hobby'] ?? ''),
-              textAttribute('Alamat', biodata['addr'] ?? ''),
-              SizedBox(
-                height: 10,
-              ),
-              teksKotak(Colors.black38, 'Deskripsi'),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                biodata['desc'] ?? '',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-            ], //children
-            
-          ),
-        ),
+      title: 'Profil Restoran',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: RestoProfileScreen(),
     );
   }
+}
 
-  Expanded btnContact(IconData icon, var color, String uri) {
-    return Expanded(
-      child: ElevatedButton(
-        onPressed: () {
-          launch(uri);
-        },
-        child: Icon(icon),
-        style: ElevatedButton.styleFrom(
-            shape: StadiumBorder(),
-            backgroundColor: color,
-            foregroundColor: Colors.white),
-      ),
-    );
-  }
-
-  Row textAttribute(String judul, String teks) {
-    return Row(
-      children: [
-        Container(
-          width: 80,
-          child: Text(
-            '- $judul ',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-        ),
-        Text(
-          ': ',
-          style: TextStyle(fontSize: 18),
-        ),
-        Text(
-          teks,
-          style: TextStyle(fontSize: 18),
-        ),
-      ],
-    );
-  }
-
-  Container teksKotak(Color bgColor, String teks) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      alignment: Alignment.center,
-      width: double.infinity,
-      decoration: BoxDecoration(color: bgColor),
-      child: Text(
-        teks,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-
+class RestoProfileScreen extends StatelessWidget {
   Future launch(String uri) async {
     if (!await launchUrl(Uri.parse(uri))) {
       throw Exception('Tidak dapat memanggil : $uri');
     }
   }
 
-}
+  Expanded btnContact(IconData icon, var color, String uri) {
+    return Expanded(
+      child: PhysicalModel(
+        color: Colors.transparent, 
+        elevation: 0, 
+        child: ElevatedButton(
+          onPressed: () {
+            launch(uri);
+          },
+          child: Icon(icon),
+          style: ElevatedButton.styleFrom(
+            shape: StadiumBorder(),
+            backgroundColor: Color(0xFFFEF7FF),
+            foregroundColor: Colors.black,
+            shadowColor: Colors.transparent, 
+          ),
+        ),
+      ),
+    );
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // Nama Restoran
+              Text(
+                'RM. Singkulan',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16),
+
+              // Gambar Profil Restoran
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      16.0), 
+                  child: Image.asset(
+                    'assets/images/resto_profile.png',
+                    width: 350,
+                    height: 300,
+                    fit: BoxFit.cover, 
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 5),
+
+              // Ikon Kontak
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  btnContact(Icons.email, Colors.black,
+                       "mailto:raplirhmdnt@gmail.com?subject=Tanya%20Seputar%20Resto"),
+                  btnContact(Icons.phone, Colors.black,
+                      "tel:085856265044"),
+                  btnContact(Icons.map, Colors.black,
+                      "https://maps.app.goo.gl/jw75Cyn1YbDz93NK6"),
+                ],
+              ),
+
+              Divider(
+                color: const Color.fromARGB(255, 182, 182, 182),
+                thickness: 1,
+              ),
+
+              // Deskripsi
+              Text(
+                'Deskripsi',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'Restoran ini menyediakan berbagai menu lezat dan sedap.',
+              ),
+              SizedBox(height: 5),
+              Divider(
+                color: const Color.fromARGB(255, 182, 182, 182),
+                thickness: 1,
+              ),
+
+              // List Menu
+              Text(
+                'List Menu',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text('• Nasi Goreng'),
+                  Text('• Ayam Goreng'),
+                  Text('• Mie Goreng'),
+                  Text('• dll'),
+                ],
+              ),
+              SizedBox(height: 5),
+              Divider(
+                color: const Color.fromARGB(255, 182, 182, 182),
+                thickness: 1,
+              ),
+
+              // Alamat
+              Text(
+                'Alamat',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'Jl. Imam Bonjol No.207, Pendrikan Kidul',
+              ),
+              SizedBox(height: 5),
+              Divider(
+                color: const Color.fromARGB(255, 182, 182, 182),
+                thickness: 1,
+              ),
+
+              // Jam Buka
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Jam Buka',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        width: 250,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text('Senin - Jumat'),
+                            Text('08:00 - 22:00'),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 250,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text('Sabtu - Minggu'),
+                            Text('09:00 - 23:00'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
