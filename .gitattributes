@@ -8,6 +8,6 @@
 *.C linguist-language=ignore
 
 
-*.cmake linguist-language=ignore
-*.CMake linguist-language=ignore
-*.in linguist-language=ignore
+*.cmake linguist-vendored
+*.CMake linguist-vendored
+*.in linguist-vendored
