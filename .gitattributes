@@ -15,3 +15,7 @@
 *.cmake export-ignore
 *.CMake export-ignore
 *.in export-ignore
+
+CMakeLists.txt linguist-detectable=false
+CMakeCache.txt linguist-detectable=false
+CMakeLists.txt.user linguist-detectable=false
