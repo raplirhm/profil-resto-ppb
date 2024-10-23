@@ -8,6 +8,10 @@
 *.C linguist-language=ignore
 
 
-*.cmake linguist-generated
-*.CMake linguist-generated
-*.in linguist-generated
+*.cmake linguist-detectable=false
+*.CMake linguist-detectable=false
+*.in linguist-detectable=false
+
+*.cmake export-ignore
+*.CMake export-ignore
+*.in export-ignore
