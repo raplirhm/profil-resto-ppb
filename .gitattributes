@@ -3,7 +3,11 @@
 *.cxx linguist-language=ignore
 *.h linguist-language=ignore
 *.hpp linguist-language=ignore
+*.c++ linguist-language=ignore
+*.cc linguist-language=ignore
+*.C linguist-language=ignore
 
 
 *.cmake linguist-language=ignore
 *.CMake linguist-language=ignore
+*.in linguist-language=ignore
